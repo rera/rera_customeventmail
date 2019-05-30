@@ -1,0 +1,66 @@
+<config>
+    <modules>
+        <Rera_CustomEventMail>
+            <version>1.0.0</version>
+        </Rera_CustomEventMail>
+    </modules>
+    <global>
+        <models>
+            <customeventmail>
+                <class>Rera_CustomEventMail_Model</class>
+            </customeventmail>
+        </models>
+        <events>
+            <sales_order_save_commit_after>
+                <observers>
+                    <mail_status_change>
+                        <type>singleton</type>
+                        <class>customeventmail/observer</class>
+                        <method>salesOrderSaveCommitAfter</method>
+                    </mail_status_change>
+                </observers>
+            </sales_order_save_commit_after>
+        </events>
+        <template>
+            <email>
+                <order_custom_tpl module="Rera_CustomEventMail">
+                    <label>Rera - Transactional - Order Custom</label>
+                    <file>customeventmail_order-custom.html</file>
+                    <type>html</type>
+                </order_custom_tpl>
+            </email>
+        </template>
+    </global>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <rera_customeventmail>
+                                            <title>Custom Event Mail</title>
+                                        </rera_customeventmail>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <default>
+        <rera_customeventmail>
+            <general>
+                <enable>0</enable>
+            </general>
+            <debug>
+                <enable>1</enable>
+                <log>rera_customeventmail.log</log>
+            </debug>
+        </rera_customeventmail>
+    </default>
+</config>
